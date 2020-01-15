@@ -204,7 +204,13 @@ extension CameraController: AVCapturePhotoCaptureDelegate {
         }
     }
 }
-
+/*
+extension CameraController: AVCaptureVideoDataOutputSampleBufferDelegate {
+   func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        <#code#>
+    }
+}
+*/
 extension CameraController {
     enum CameraControllerError: Swift.Error {
         case captureSessionAlreadyRunning

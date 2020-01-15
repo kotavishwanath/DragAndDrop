@@ -453,7 +453,6 @@
                                     <constraint firstAttribute="trailing" secondItem="bhF-jE-FME" secondAttribute="trailing" constant="22" id="Y3h-1V-muW"/>
                                     <constraint firstItem="L0D-6V-wNH" firstAttribute="leading" secondItem="Udz-fA-Kmj" secondAttribute="leading" id="bgk-Yg-U1Y"/>
                                     <constraint firstItem="L0D-6V-wNH" firstAttribute="width" secondItem="Udz-fA-Kmj" secondAttribute="width" id="ekE-bP-QOw"/>
-                                    <constraint firstItem="2Uz-AX-LU4" firstAttribute="centerX" secondItem="GJx-BQ-FUF" secondAttribute="centerX" id="jAS-BV-fhc"/>
                                     <constraint firstItem="L0D-6V-wNH" firstAttribute="height" secondItem="Udz-fA-Kmj" secondAttribute="height" id="t28-4n-ReC"/>
                                     <constraint firstItem="bhF-jE-FME" firstAttribute="top" secondItem="GJx-BQ-FUF" secondAttribute="top" constant="30" id="vya-Pm-tKo"/>
                                     <constraint firstItem="GEK-Wy-j69" firstAttribute="top" secondItem="bhF-jE-FME" secondAttribute="bottom" constant="16" id="whx-4v-Dpw"/>
@@ -466,6 +465,7 @@
                             <constraint firstItem="GJx-BQ-FUF" firstAttribute="top" secondItem="OAM-je-Rbp" secondAttribute="top" constant="20" symbolic="YES" id="QPU-uz-kZS"/>
                             <constraint firstItem="GJx-BQ-FUF" firstAttribute="leading" secondItem="hHE-bk-CEd" secondAttribute="leading" id="RhR-VD-lgt"/>
                             <constraint firstAttribute="bottom" secondItem="GJx-BQ-FUF" secondAttribute="bottom" id="aCf-yR-REJ"/>
+                            <constraint firstItem="2Uz-AX-LU4" firstAttribute="centerX" secondItem="hHE-bk-CEd" secondAttribute="centerX" id="y3z-Jl-JZY"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hHE-bk-CEd"/>
                     </view>

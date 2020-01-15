@@ -4,6 +4,8 @@
 //
 //  Created by Vishwanath Kota on 09/01/2020.
 //  Copyright © 2020 Vishwanath Kota. All rights reserved.
+
+//  https://www.appcoda.com/avfoundation-swift-guide/
 //
 import Photos
 import UIKit
@@ -32,12 +34,12 @@ class FetchImagesViewController: UIViewController {
    override func viewDidLoad() {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM-dd-yyyy HH:mm:ss"//"yyyy'-'MM'-'dd'T'HH':'mm':'ssZZZ"
-        let date = dateFormatter.date(from: "01-09-2020 10:38:00")
+        let date = dateFormatter.date(from: "01-15-2020 09:38:00")
         print(date!)
        
        let formatter = DateFormatter()
        formatter.dateFormat = "MM-dd-yyyy HH:mm:ss"//"MM-dd-yyyy"
-       fetchPhotosInRange(startDate: formatter.date(from: "01-09-2020 10:38:00")! as NSDate, endDate: formatter.date(from: "01-09-2020 12:38:00")! as NSDate)
+       fetchPhotosInRange(startDate: formatter.date(from: "01-15-2020 11:00:00")! as NSDate, endDate: formatter.date(from: "01-15-2020 12:38:00")! as NSDate)
         print(images.count)
         
         
@@ -76,7 +78,6 @@ class FetchImagesViewController: UIViewController {
        // Fetch the images between the start and end date
        let fetchOptions = PHFetchOptions()
        fetchOptions.predicate = NSPredicate(format: "creationDate > %@ AND creationDate < %@", startDate, endDate)
-
        images = []
 
        let fetchResult: PHFetchResult = PHAsset.fetchAssets(with: PHAssetMediaType.image, options: fetchOptions)
@@ -86,6 +87,58 @@ class FetchImagesViewController: UIViewController {
            // Perform the image request
            for index in 0  ..< fetchResult.count  {
             let asset = fetchResult.object(at: index)
+            
+            //MARK:- FetchBurst Photos
+            if (asset.representsBurst){
+                // Need to Keep this block code in a method named func fetchBurstModePhotos(PHFetchResult asset)
+                print("Accessed the burst photo !!")
+                let fetchOptions = PHFetchOptions()
+                fetchOptions.includeAllBurstAssets = true
+                let burstSequence = PHAsset.fetchAssets(withBurstIdentifier: asset.burstIdentifier ?? "", options: fetchOptions) as? PHFetchResult
+                var preferredAsset: PHAsset? = nil
+                
+                let imgManagerBurst = PHImageManager.default()
+                if let burstSequence = burstSequence {
+                    for i in 0 ..< burstSequence.count{
+                        let assetLib = burstSequence.object(at: i)
+                           imgManagerBurst.requestImageData(for: assetLib, options: requestOptions, resultHandler: { (imageData: Data?, dataUTI: String?, orientation: UIImage.Orientation, info: [AnyHashable : Any]?) -> Void in
+                                        if let imageData = imageData {
+                                            if let image = UIImage(data: imageData) {
+                                                // Add the returned image to your array
+                                                self.images += [image]
+                                            }
+                                        }
+                                        if self.images.count == burstSequence.count {
+                                            // Do something once all the images
+                                            // have been fetched. (This if statement
+                                            // executes as long as all the images
+                                            // are found; but you should also handle
+                                            // the case where they're not all found.)
+                                            print(self.images)
+                                        }
+                                    })
+                    
+                                 guard let time = assetLib.creationDate else { return }
+                                //           print(asset.creationDate ?? "None")
+                                
+                                //-------------Important
+                                
+                                //Fetching milli second from "time"
+                                let formatter = DateFormatter()
+                                formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSS"
+
+                                let myString = formatter.string(from: time) // string purpose I add here
+                                // convert your string to date
+                                let yourDate = formatter.date(from: myString)
+                                //then again set the date format whhich type of output you need
+                                formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSS"
+                                // again convert your date to string
+                                let myStringafd = formatter.string(from: yourDate!)
+                                print(myStringafd)
+                    }
+                }
+            }
+            // MARK:- ------------------------------------------------------
             guard let time = asset.creationDate else { return }
 //           print(asset.creationDate ?? "None")
             
@@ -186,4 +239,3 @@ extension FetchImagesViewController {
         }
     }
 }
-
